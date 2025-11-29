@@ -19,7 +19,7 @@ resource "aws_instance" "server" {
 	instance_type               = var.instance_type
 	key_name                    = var.key_name 
 	associate_public_ip_address = var.associate_public_ip_address
-	vpc_security_group_ids      = local.sg_ids
+	security_group_id           = var.security_grouo_id
     count                       = var.instance_count
 
 
