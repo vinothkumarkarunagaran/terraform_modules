@@ -16,7 +16,7 @@ resource "aws_instance" "server" {
   key_name                    = var.key_name
   associate_public_ip_address = var.associate_public_ip_address
   vpc_security_group_ids      = var.vpc_security_group_ids   # ✅ DIRECT VARIABLE
-
+}
   dynamic "ebs_block_device" {
     for_each = var.ebs_volumes
     content {
