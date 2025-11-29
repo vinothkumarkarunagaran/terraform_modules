@@ -14,7 +14,7 @@ locals {
 }
 
 
-esource "aws_instance" "server" {
+resource "aws_instance" "name" {
   count = var.instance_count
 
   ami                         = var.ami
@@ -26,17 +26,17 @@ esource "aws_instance" "server" {
 
 }
 
-	dynamic "ebs_block_device" {
-		for_each = var.ebs_volumes
-		content {
-			device_name           = ebs_block_device.value.device_name
-			volume_size           = ebs_block_device.value.size
-			volume_type           = ebs_block_device.value.type
-			delete_on_termination = try(ebs_block_device.value.delete_on_termination, true)
-		}
+dynamic "ebs_block_device" {
+	for_each = var.ebs_volumes
+	content {
+		device_name           = ebs_block_device.value.device_name
+		volume_size           = ebs_block_device.value.size
+		volume_type           = ebs_block_device.value.type
+		delete_on_termination = try(ebs_block_device.value.delete_on_termination, true)
 	}
+}
 
-  tags = {
-    Name = "server-${count.index + 1}"
-  }
+tags = {
+Name = "server-${count.index + 1}"
+}
 
