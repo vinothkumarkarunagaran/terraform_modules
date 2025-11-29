@@ -37,12 +37,6 @@ variable "associate_public_ip_address" {
 
 
 
-variable "tags" {
-  description = "Additional tags to add to resources"
-  type        = map(string)
-  default     = {}
-}
-
 variable "ebs_volumes" {
   description = "List of additional EBS volumes to attach"
   type = list(object({
