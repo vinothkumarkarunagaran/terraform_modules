@@ -58,7 +58,7 @@ variable "instance_count" {
   default     = 2
 }
 
-variable "tags" {
+variable "tag" {
   description = "Tag value"
   type        = string
   default     = "node"
