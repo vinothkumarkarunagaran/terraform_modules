@@ -27,8 +27,8 @@ resource "aws_instance" "server" {
     }
   }
 
-  tags = merge(
-    { Name = "server-${count.index + 1}" },
-    var.tags
-  )
+  tags = {
+  Name = "server-${count.index + 1}"
+  Role = var.tag
 }
+
