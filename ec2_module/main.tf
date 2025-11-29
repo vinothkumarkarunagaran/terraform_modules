@@ -14,15 +14,17 @@ locals {
 }
 
 
-resource "aws_instance" "server" {
-	ami                         = var.ami
-	instance_type               = var.instance_type
-	key_name                    = var.key_name 
-	associate_public_ip_address = var.associate_public_ip_address
-	security_group_id           = var.security_grouo_id
-    count                       = var.instance_count
+esource "aws_instance" "server" {
+  count = var.instance_count
+
+  ami                         = var.ami
+  instance_type               = var.instance_type
+  key_name                    = var.key_name
+  associate_public_ip_address = var.associate_public_ip_address
+  vpc_security_group_ids      = var.security_group_ids
 
 
+}
 
 	dynamic "ebs_block_device" {
 		for_each = var.ebs_volumes
@@ -34,5 +36,7 @@ resource "aws_instance" "server" {
 		}
 	}
 
-	tags = local.merged_tags
-}
+  tags = {
+    Name = "server-${count.index + 1}"
+  }
+
