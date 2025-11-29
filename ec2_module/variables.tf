@@ -7,7 +7,7 @@ variable "name" {
 variable "ami" {
   description = "AMI id for the instance"
   type        = string
-  default = "ami-0a9098891d675c629"
+  default     = "ami-0a9098891d675c629"
 }
 
 variable "instance_type" {
@@ -19,12 +19,11 @@ variable "instance_type" {
 variable "key_name" {
   description = "SSH key pair name (optional)"
   type        = string
-  default     = "pavi.pem"
+  default     = "pavi"   # ✅ key name should NOT include .pem
 }
 
-
 variable "vpc_security_group_ids" {
-  description = "List of existing security group IDs to attach (optional)"
+  description = "List of existing security group IDs to attach"
   type        = list(string)
   default     = ["sg-010d62341933131c7"]
 }
@@ -35,25 +34,32 @@ variable "associate_public_ip_address" {
   default     = true
 }
 
-
-
 variable "ebs_volumes" {
   description = "List of additional EBS volumes to attach"
   type = list(object({
-    device_name            = string
-    size                   = number
-    type                   = string
-    delete_on_termination  = optional(bool, true)
+    device_name           = string
+    size                  = number
+    type                  = string
+    delete_on_termination = optional(bool, true)
   }))
-  default = [{
-    device_name = "/dev/sdh"
-    size        = 20
-    type        = "gp2"
-    delete_on_termination = true
-  }]
+  default = [
+    {
+      device_name           = "/dev/sdh"
+      size                  = 20
+      type                  = "gp2"
+      delete_on_termination = true
+    }
+  ]
 }
- variable "instance_count" {
-   description = "number of instances"
-   type = number
-   default = 2
- }
+
+variable "instance_count" {
+  description = "Number of EC2 instances"
+  type        = number
+  default     = 2
+}
+
+variable "tag" {
+  description = "Tag value"
+  type        = string
+  default     = "node"
+}
