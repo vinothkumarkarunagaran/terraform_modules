@@ -1,11 +1,12 @@
 terraform {
-	required_version = ">= 1.0"
-	required_providers {
-		aws = {
-			source  = "hashicorp/aws"
-			version = "~> 4.0"
-		}
-	}
+  required_version = ">= 1.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
 }
 
 resource "aws_instance" "server" {
@@ -15,8 +16,8 @@ resource "aws_instance" "server" {
   instance_type               = var.instance_type
   key_name                    = var.key_name
   associate_public_ip_address = var.associate_public_ip_address
-  vpc_security_group_ids      = var.vpc_security_group_ids   # ✅ DIRECT VARIABLE
-}
+  vpc_security_group_ids      = var.vpc_security_group_ids
+
   dynamic "ebs_block_device" {
     for_each = var.ebs_volumes
     content {
@@ -28,7 +29,7 @@ resource "aws_instance" "server" {
   }
 
   tags = {
-  Name = "server-${count.index + 1}"
-  Role = var.tag
+    Name = "server-${count.index + 1}"
+    Role = var.tag
+  }
 }
-
